@@ -114,3 +114,127 @@ const products = [
 ];
 
 
+function displayProducts() {
+  const productsContainer = document.getElementById('products');
+
+  products.forEach(product => {
+    const productElement = document.createElement('article');
+    productElement.className = 'product';
+
+    const imgElement = document.createElement('img');
+    imgElement.src = product.image;
+    imgElement.alt = '';
+    imgElement.className = 'product-img img';
+    productElement.appendChild(imgElement);
+
+    const footerElement = document.createElement('footer');
+    const nameElement = document.createElement('h5');
+    nameElement.className = 'product-name';
+    nameElement.textContent = product.title;
+
+    const priceElement = document.createElement('span');
+    priceElement.className = 'product-price';
+    priceElement.textContent = `$${product.price.toFixed(2)}`;
+
+    footerElement.appendChild(nameElement);
+    footerElement.appendChild(priceElement);
+    productElement.appendChild(footerElement);
+
+    productsContainer.appendChild(productElement);
+  });
+}
+
+let currentSortOrder = 'asc';
+
+function sortdata(order) {
+  currentSortOrder = order;
+  displayProducts();
+}
+
+function displayProducts() {
+  const productsContainer = document.getElementById('products');
+
+  const sortedProducts = sortProducts(products, currentSortOrder);
+
+  productsContainer.innerHTML = '';
+
+  sortedProducts.forEach(product => {
+    const productElement = document.createElement('article');
+    productElement.className = 'product';
+
+    const imgElement = document.createElement('img');
+    imgElement.src = product.image;
+    imgElement.className = 'product-img img';
+    imgElement.alt = '';
+
+    const footerElement = document.createElement('footer');
+
+    const nameElement = document.createElement('h5');
+    nameElement.className = 'product-name';
+    nameElement.textContent = product.title;
+
+    const priceElement = document.createElement('span');
+    priceElement.className = 'product-price';
+    priceElement.textContent = `$${product.price.toFixed(2)}`;
+
+    footerElement.appendChild(nameElement);
+    footerElement.appendChild(priceElement);
+
+    productElement.appendChild(imgElement);
+    productElement.appendChild(footerElement);
+
+    productsContainer.appendChild(productElement);
+  });
+}
+
+function sortProducts(products, order) {
+  const sortedProducts = [...products];
+
+  sortedProducts.sort((a, b) => {
+    return order === 'asc' ? a.price - b.price : b.price - a.price;
+  });
+
+  return sortedProducts;
+}
+
+function filterProductsByCompany() {
+  const selectedCompany = document.getElementById('companyFilter').value;
+
+  const filteredProducts = products.filter(product => {
+    if (selectedCompany === 'all') {
+      return true;
+    }
+
+    return product.company === selectedCompany;
+  });
+
+  const productsContainer = document.getElementById('products');
+  productsContainer.innerHTML = '';
+
+  filteredProducts.forEach(product => {
+    const productElement = document.createElement('article');
+    productElement.className = 'product';
+
+    const imgElement = document.createElement('img');
+    imgElement.src = product.image;
+    imgElement.alt = '';
+    imgElement.className = 'product-img img';
+    productElement.appendChild(imgElement);
+
+    const footerElement = document.createElement('footer');
+    const nameElement = document.createElement('h5');
+    nameElement.className = 'product-name';
+    nameElement.textContent = product.title;
+
+    const priceElement = document.createElement('span');
+    priceElement.className = 'product-price';
+    priceElement.textContent = `$${product.price.toFixed(2)}`;
+
+    footerElement.appendChild(nameElement);
+    footerElement.appendChild(priceElement);
+    productElement.appendChild(footerElement);
+
+    productsContainer.appendChild(productElement);
+  });
+}
+
